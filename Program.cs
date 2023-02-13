@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Parcial1AP1.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+IServerSideBlazorBuilder serverSideBlazorBuilder = builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
+
+var ConStr= builder.Configuration.GetConnectionString("ConStr");
+
+
+builder.Services.AddDbContext<Contexto>(options => options.UseSqlite());
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
