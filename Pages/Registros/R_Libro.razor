@@ -1,0 +1,91 @@
+@page "/R_Libros"
+
+
+<PageTitle>Registro Libros</PageTitle>
+
+<head>
+    <style>
+        body {
+            body {
+                background-attachment:fixed;
+                margin:0;
+                padding:0;
+                font-family:monospace;
+                color: black;
+            }
+
+            h4 {
+
+                color: black;
+
+            }
+
+            label{
+                text-align:center;
+            }
+
+        
+        }
+    </style>
+</head>
+
+<body>
+    <EditForm model="Books">
+        <DataAnnotationsValidator/>
+
+        <div class="container">
+            <div class="card text-black bg-light mb-3 shadow-lg">
+                <div class="card-header">
+                    <h4>Registro de libros</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+
+                        <div class="col-3 mb-3">
+                            <label for="BookID">Book Id:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="BookID"/>
+                                <button type="button" class="btn btn-primary"><i class="oi oi-magnifying-glass"/>Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-5 mb-3">
+                            <label for="Titulo">Titulo:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="Titulo"/>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mb-3">
+                            <label for="Titulo">Titulo:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="Titulo"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer d-flex justify-content-center">
+                    <div class="row">
+                        <div class="btn-group">
+                            <button class="btn btn-success" type="button"><i class="oi oi-file"/>Guardar</button>
+                            <button class="btn btn-primary" type="button"><i class="oi oi-document"/>Nuevo</button>
+                            <button class="btn btn-danger" type="button"><i class="oi oi-trash"/>Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </EditForm>
+</body>
+
+
+@code
+{
+
+}
