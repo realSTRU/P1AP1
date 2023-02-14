@@ -66,6 +66,23 @@ public class BooksBLL
         }
     }
 
+    public bool Eliminar(Books book)
+    {
+        _contexto.Entry(book).State=EntityState.Deleted;
+
+        
+        _contexto.Database.ExecuteSqlRaw($"DELETE FROM Books WHERE BookID={book.BookID}; ");
+
+        Console.WriteLine("VALOR Eliminado");
+
+        bool Eliminado = _contexto.SaveChanges() > 0;
+
+        _contexto.Entry(book).State=EntityState.Detached;
+
+        
+        return Eliminado;
+    }
+
 
 
 
