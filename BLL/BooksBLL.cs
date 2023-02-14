@@ -84,6 +84,11 @@ public class BooksBLL
     }
 
 
+    public List<Books> GetList()
+    {
+        return _contexto.Books.ToList();
+    }
+
 
 
 

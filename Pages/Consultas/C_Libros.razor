@@ -1,0 +1,60 @@
+@page "/C_Libros"
+
+@inject BooksBLL bookBll
+
+
+<PageTitle>Consulta Libros</PageTitle>
+
+<body>
+    <div class="container">
+
+        <div class="card text-dark bg-light mb-3 shadow-lgaccordion-body">
+
+            <div class="card-header">
+
+                <h4>Consulta de Libros.</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var book in BookList)
+                        {
+
+                            <tr>
+                                <td>@book.BookID</td>
+                                <td>@book.Titulo</td>
+                                <td>@book.Precio</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+@code
+{
+
+    private List<Books>? BookList {get; set;}
+    
+    protected override async Task OnInitializedAsync()
+    {
+        BookList = bookBll.GetList();
+    }
+
+
+}
