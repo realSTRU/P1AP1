@@ -1,5 +1,9 @@
 @page "/R_Libros"
+@page "/R_Libros/{BookID:int}"
 
+
+
+@inject BooksBLL bookBll
 
 <PageTitle>Registro Libros</PageTitle>
 
@@ -30,7 +34,7 @@
 </head>
 
 <body>
-    <EditForm model="Books">
+    <EditForm model="Books" OnValidSubmit="Guardar" >
         <DataAnnotationsValidator/>
 
         <div class="container">
@@ -45,22 +49,22 @@
                         <div class="col-3 mb-3">
                             <label for="BookID">Book Id:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="BookID"/>
-                                <button type="button" class="btn btn-primary"><i class="oi oi-magnifying-glass"/>Buscar</button>
+                                <input id ="BookID" type="text" class="form-control" @bind-value="book.BookID"/>
+                                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="oi oi-magnifying-glass" />Buscar</button>
                             </div>
                         </div>
 
                         <div class="col-5 mb-3">
                             <label for="Titulo">Titulo:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="Titulo"/>
+                                <input @bind-value="book.Titulo"type="text" class="form-control" id="Titulo "/>
                             </div>
                         </div>
 
                         <div class="col-3 mb-3">
-                            <label for="Titulo">Titulo:</label>
+                            <label for="Precio">Precio</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="Titulo"/>
+                                <input @bind-value="book.Precio" type="text" class="form-control" id="Precio"/>
                             </div>
                         </div>
 
@@ -71,8 +75,8 @@
                 <div class="card-footer d-flex justify-content-center">
                     <div class="row">
                         <div class="btn-group">
-                            <button class="btn btn-success" type="button"><i class="oi oi-file"/>Guardar</button>
-                            <button class="btn btn-primary" type="button"><i class="oi oi-document"/>Nuevo</button>
+                            <button class="btn btn-success" type="button" @onclick="Guardar"><i class="oi oi-file"/>Guardar</button>
+                            <button class="btn btn-primary" type="button" @onclick ="Nuevo"><i class="oi oi-document"/>Nuevo</button>
                             <button class="btn btn-danger" type="button"><i class="oi oi-trash"/>Eliminar</button>
                         </div>
                     </div>
@@ -87,5 +91,65 @@
 
 @code
 {
+
+    [Parameter]
+
+    public int BookID {get; set;}
+
+    public Books book {get; set;} = new Books();
+
+    protected override void OnInitialized(){
+
+        if(BookID>0){
+            this.book.BookID = BookID;
+            this.Buscar();
+        }
+    }
+
+    private void Buscar()
+    {
+        var libroEncontrado = bookBll.Buscar(book.BookID);
+        if(libroEncontrado != null)
+        {
+            Console.WriteLine($"Se encontro un libro con el ID:{this.book.BookID}");
+            this.book= libroEncontrado;
+            
+        }
+        else
+        {
+            Nuevo();
+            Console.WriteLine("Id no existente");
+        }
+    }
+
+    public void Nuevo(){
+        this.book = new Books();
+    }
+
+
+    public bool Validar(){
+        return this.book.Titulo != "" && this.book.Precio > 0;
+    }
+
+    public void Guardar(){
+
+       
+        if(Validar()){
+
+            bookBll.Guardar(this.book);
+            Console.WriteLine($"Se guardo en el {this.book.BookID}");
+            this.Nuevo();
+        }
+        else{
+            Console.WriteLine("Campos no validos o no completados");
+        }
+    }
+    
+
+
+
+
+
+
 
 }

@@ -14,6 +14,7 @@ public class BooksBLL
     }
 
 
+
     public bool Existe(int BookID)
     {
         return _contexto.Books.Any(o=> o.BookID == BookID);
@@ -29,6 +30,16 @@ public class BooksBLL
 
         return insertado;
 
+    }
+
+    public Books? Buscar(int BookID)
+    {
+        var buscado = _contexto.Books
+        .Where(o => o.BookID == BookID)
+        .AsNoTracking()
+        .SingleOrDefault();
+
+        return buscado;
     }
 
 
@@ -55,7 +66,7 @@ public class BooksBLL
         }
     }
 
-    
+
 
 
 
