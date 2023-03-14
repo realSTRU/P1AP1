@@ -12,4 +12,7 @@ public class Books
 
     [Required(ErrorMessage ="Ingrese un precio!")]
     public double Precio { get; set; }
+
+    [Required(ErrorMessage = "Ingrese una fecha")]
+    public DateOnly Emison {get; set;}
 }

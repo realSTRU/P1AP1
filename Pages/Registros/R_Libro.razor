@@ -2,7 +2,7 @@
 @page "/R_Libros/{BookID:int}"
 
 
-
+@inject NotificationService notificationService
 @inject BooksBLL bookBll
 
 <PageTitle>Registro Libros</PageTitle>
@@ -67,6 +67,14 @@
                                 <input @bind-value="book.Precio" type="text" class="form-control" id="Precio"/>
                             </div>
                         </div>
+                        <div class="mb-3">
+                                <label for="Fprestamo"><b>Fecha Emision:</b></label>
+                                <div class="input-group mb-6">
+                                    <input @bind-value="book.Emison"  type="date"  class="form-control" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2" id="FPrestamo"/>
+                                </div>
+
+                            </div>
 
                     </div>
 
@@ -106,6 +114,20 @@
         }
     }
 
+    public void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
+
+    public NotificationMessage Good(string mensaje, string detalle, int duracion)
+    {
+        return new NotificationMessage{Severity= NotificationSeverity.Success, Summary = mensaje, Detail = detalle, Duration = duracion};
+    }
+
+     public NotificationMessage Error(string mensaje, string detalle, int duracion)
+    {
+        return new NotificationMessage{Severity= NotificationSeverity.Error, Summary = mensaje, Detail = detalle, Duration = duracion};
+    }
     private void Buscar()
     {
         var libroEncontrado = bookBll.Buscar(book.BookID);
@@ -138,9 +160,11 @@
 
             bookBll.Guardar(this.book);
             Console.WriteLine($"Se guardo en el {this.book.BookID}");
+            ShowNotification(Good("Registro Actualizado", "Libro guardado correctamente", 5000));
             this.Nuevo();
         }
         else{
+             ShowNotification(Error("Registro Actualizado", "No se a guardado nada, complete los campos", 5000));
             Console.WriteLine("Campos no validos o no completados");
         }
     }
@@ -154,6 +178,7 @@
             if(RES == false)
             {
                 Console.WriteLine("Eliminado Correctamente");
+                ShowNotification(Good("Registro actualizado","Instancia eliminada corectamente", 5000));
                 Nuevo();
             }
             else
@@ -163,6 +188,7 @@
         }
         else
         {
+            ShowNotification(Error("No se ha borrado nada", "Posible Id no valido",5000));
             Console.WriteLine("Id No valido");
         }
     }

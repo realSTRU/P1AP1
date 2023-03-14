@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Radzen.Blazor;
+using Radzen;
+
 
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<BooksBLL>();
-
+builder.Services.AddScoped<NotificationService>();
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 
 builder.Services.AddDbContext<Contexto>(options => options.UseSqlite(ConStr));

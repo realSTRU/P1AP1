@@ -46,12 +46,9 @@ public class BooksBLL
     public bool Modificar(Books book)
     {
         _contexto.Entry(book).State = EntityState.Modified;
+    
+        return _contexto.SaveChanges() > 0;
 
-        bool Modificado = _contexto.SaveChanges() > 0;
-
-        _contexto.Entry(book).State = EntityState.Detached;
-
-        return Modificado; 
     }
 
     public bool Guardar(Books book)
